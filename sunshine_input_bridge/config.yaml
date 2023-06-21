@@ -1,0 +1,32 @@
+outputs:
+  keyboard:
+    name: virtual-keyboard
+    type: keyboard
+  mouse:
+    name: virtual-mouse
+    type: mouse
+  gamepad:
+    name: virtual-gamepad
+    type: gamepad
+
+inputs:
+  sunshine_keyboard:
+    name: Keyboard passthrough
+    product: 0xdead
+    vendor: 0xbeef
+  sunshine_mouse:
+    name: Touchscreen passthrough
+    product: 0xdead
+    vendor: 0xbeef
+  sunshine_gamepad:
+    name: Microsoft X-Box 360 pad
+    product: 0x28E
+    vendor: 0x45E
+
+mappings:
+  - input: sunshine_keyboard
+    output: keyboard
+  - input: sunshine_mouse
+    output: mouse
+  - input: sunshine_gamepad
+    output: gamepad

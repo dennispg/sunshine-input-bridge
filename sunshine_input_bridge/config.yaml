@@ -2,6 +2,9 @@ outputs:
   keyboard:
     name: virtual-keyboard
     type: keyboard
+  touchscreen:
+    name: virtual-touchscreen
+    type: touchscreen
   mouse:
     name: virtual-mouse
     type: mouse
@@ -11,14 +14,22 @@ outputs:
 
 inputs:
   sunshine_keyboard:
+    uniq: Sunshine Keyboard
     name: Keyboard passthrough
     product: 0xdead
     vendor: 0xbeef
   sunshine_mouse:
+    uniq: Sunshine Mouse
+    name: Logitech Wireless Mouse PID:4038
+    product: 0x4038
+    vendor: 0x46d
+  sunshine_touch:
+    uniq: Sunshine Touch
     name: Touchscreen passthrough
     product: 0xdead
     vendor: 0xbeef
   sunshine_gamepad:
+    uniq: Sunshine Gamepad
     name: Microsoft X-Box 360 pad
     product: 0x28E
     vendor: 0x45E
@@ -30,3 +41,5 @@ mappings:
     output: mouse
   - input: sunshine_gamepad
     output: gamepad
+  - input: sunshine_touch
+    output: touchscreen

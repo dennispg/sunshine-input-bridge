@@ -8,6 +8,7 @@ class OutputDeviceType(str, Enum):
     keyboard = "keyboard"
     mouse = "mouse"
     gamepad = "gamepad"
+    touchscreen = "touchscreen"
 
 
 class OutputSetting(BaseModel):
@@ -22,6 +23,7 @@ class OutputSetting(BaseModel):
 
 class InputSetting(BaseModel):
     name: Optional[str]
+    uniq: Optional[str]
     vendor: Optional[int]
     product: Optional[int]
     device_node: Optional[str]
@@ -46,6 +48,8 @@ class Settings(BaseSettings):
     outputs: dict[str, OutputSetting]
     inputs: dict[str, InputSetting]
     mappings: list[InputMapping]
+
+    health_socket = "\0sunshine_input_bridge"
 
     class Config:
         fields = {}

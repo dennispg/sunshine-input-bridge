@@ -1,5 +1,3 @@
-# type: ignore
-
 from ..settings import OutputSetting
 from ..utils import ecodes
 from .base import VirtualDevice

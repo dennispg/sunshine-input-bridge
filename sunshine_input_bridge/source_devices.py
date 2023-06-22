@@ -1,11 +1,15 @@
+from __future__ import annotations
+
 import asyncio
-from typing import Callable, Literal
+from typing import TYPE_CHECKING, Callable, Literal
 
 import evdev
 import pyudev
 
-from .settings import Settings
 from .utils import log
+
+if TYPE_CHECKING:
+    from .settings import Settings
 
 
 class SourceDevices:
@@ -27,13 +31,23 @@ class SourceDevices:
         else:
             self._remove_callbacks.append(callback)
 
-    def add_device(self, device_node: str):
-        device = evdev.InputDevice(device_node)
+    async def add_device(self, device_node: str):
+        try:
+            await asyncio.sleep(0.1)
+            device = evdev.InputDevice(device_node)
+        except PermissionError:
+            log.critical(f"Permission denied: Could not open device {device_node}")
+            return None
+
         for key, input in self.settings.inputs.items():
-            if device.path == input.device_node or (
-                (input.name is None or device.name == input.name)
-                and (input.vendor is None or device.info.vendor == input.vendor)
-                and (input.product is None or device.info.product == input.product)
+            if (
+                device.uniq == input.uniq
+                or device.path == input.device_node
+                or (
+                    (input.name is None or device.name == input.name)
+                    and (input.vendor is None or device.info.vendor == input.vendor)
+                    and (input.product is None or device.info.product == input.product)
+                )
             ):
                 self.sources[key] = device
                 log.info(f"Added source device [{key}] for {device_node}.")
@@ -78,6 +92,6 @@ class SourceDevices:
             return
         if device.device_node.startswith("/dev/input/event"):
             if device.action == "add":
-                self.add_device(device.device_node)
+                asyncio.ensure_future(self.add_device(device.device_node))
             elif device.action == "remove":
                 self.remove_device(device.device_node)

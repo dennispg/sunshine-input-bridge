@@ -1,0 +1,31 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug: Input Bridge",
+            "type": "python",
+            "request": "launch",
+            "module": "sunshine_input_bridge",
+            "args": [
+                "-c",
+                "./sunshine_input_bridge/config.yaml"
+            ],
+            "justMyCode": true
+        },
+        {
+            "name": "Debug: Health Check Client",
+            "type": "python",
+            "request": "launch",
+            "module": "sunshine_input_bridge",
+            "args": [
+                "-c",
+                "./sunshine_input_bridge/config.yaml",
+                "--healthcheck"
+            ],
+            "justMyCode": true
+        }
+    ]
+}

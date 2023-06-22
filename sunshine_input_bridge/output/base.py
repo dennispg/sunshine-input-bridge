@@ -1,11 +1,13 @@
 from abc import ABC, abstractmethod
+from typing import Optional
+
 from evdev import UInput
 
 
 class VirtualDevice(ABC):
     @abstractmethod
     def __init__(self):
-        self.input_dev: UInput | None = None
+        self.input_dev: Optional[UInput] = None
         self.capabilities = None
 
         self.name: str
@@ -14,7 +16,7 @@ class VirtualDevice(ABC):
         self.version: int
         self.phys: str
         self.bustype: str
-        self.input_props: list[int] | None = None
+        self.input_props: Optional[list[int]] = None
 
     def create(self):
         if not self.is_open():

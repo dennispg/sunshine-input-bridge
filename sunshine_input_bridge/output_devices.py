@@ -1,5 +1,13 @@
-from .output import VirtualDevice, VirtualGamepad, VirtualKeyboard, VirtualMouse
-from .settings import Settings
+from __future__ import annotations
+
+from .output import (
+    VirtualDevice,
+    VirtualGamepad,
+    VirtualKeyboard,
+    VirtualMouse,
+    VirtualTouchscreen,
+)
+from .settings import OutputDeviceType, Settings
 from .utils import log
 
 
@@ -11,12 +19,14 @@ class OutputDevices:
     def open(self):
         for key, output in self.settings.outputs.items():
             log.info(f"Created device '{output.name}.")
-            if output.type == "keyboard":
+            if output.type == OutputDeviceType.keyboard:
                 device = VirtualKeyboard(output)
-            elif output.type == "mouse":
+            elif output.type == OutputDeviceType.mouse:
                 device = VirtualMouse(output)
-            elif output.type == "gamepad":
+            elif output.type == OutputDeviceType.gamepad:
                 device = VirtualGamepad(output)
+            elif output.type == OutputDeviceType.touchscreen:
+                device = VirtualTouchscreen(output)
             else:
                 raise ValueError(f"Unknown output device type: {output.type}")
             device.create()
